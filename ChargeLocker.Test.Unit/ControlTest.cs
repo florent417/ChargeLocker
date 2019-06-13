@@ -203,6 +203,26 @@ namespace ChargeLocker.Test.Unit
         }
 
         [Test]
+        public void RfidDetected_StateLockedAndNewIdIsNull_DisplaysRfidErr()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = testRfid});
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            display.Received(1).ShowRfidErr();
+        }
+
+        [Test]
+        public void RfidDetected_StateLockedAndOldIdIsNull_DisplaysRfidErr()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+
+            display.Received(1).ShowRfidErr();
+        }
+
+        [Test]
         public void RfidDetected_StateLocked_StopChargeCalled()
         {
             charger.IsConnected().Returns(true);

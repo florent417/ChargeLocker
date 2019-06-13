@@ -11,7 +11,6 @@ namespace ChargeLockerClasses.Controllers
         private ChargerLockState _lockState;
 
         private IDoor _door;
-        private IRFIDReader _rfidReader;
         private ICharger _charger;
         private ILogger _logger;
         private IDisplay _display;
@@ -22,7 +21,6 @@ namespace ChargeLockerClasses.Controllers
             ICharger charger, ILogger logger, IDisplay display)
         {
             _door = door;
-            _rfidReader = rfidReader;
             _charger = charger;
             _logger = logger;
             _display = display;
@@ -31,7 +29,7 @@ namespace ChargeLockerClasses.Controllers
             _door.Opened += new EventHandler(DoorOpened);
             _door.Closed += new EventHandler(DoorClosed);
 
-            _rfidReader.DetectRfid += new EventHandler<RfidChangedEventArgs>(RfidDetected);
+            rfidReader.DetectRfid += new EventHandler<RfidChangedEventArgs>(RfidDetected);
         }
 
         private void DoorOpened(object sender, EventArgs e)
@@ -71,6 +69,10 @@ namespace ChargeLockerClasses.Controllers
 
         private bool CheckId(string id)
         {
+            if (id == null)
+            {
+                return false;
+            }
             return id.Equals(_oldId);
         }
 
