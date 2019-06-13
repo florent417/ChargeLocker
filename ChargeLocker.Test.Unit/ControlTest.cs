@@ -63,20 +63,27 @@ namespace ChargeLocker.Test.Unit
 
         #region RfidDetected tests
 
-        #region State = Available
+        #region RfidDetected State = Available
 
         [Test]
-        public void RfidDetected_StateAvailable_DisplaysInputRfid()
+        public void RfidDetected_StateAvailable_DisplaysConnectPhone()
         {
-            door.Opened += Raise.EventWith(this, EventArgs.Empty);
-            door.Closed += Raise.EventWith(this, EventArgs.Empty);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
 
-            display.Received(1).ShowInputRfid();
+            display.Received(1).ShowConnectPhone();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_ChargerIsConnected()
+        {
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            charger.Received(1).IsConnected();
         }
 
         #endregion
 
-        #region State = DoorOpen
+        #region RfidDetected State = DoorOpen
 
         [Test]
         public void RfidDetected_StateOpen_DisplaysInputRfid()
