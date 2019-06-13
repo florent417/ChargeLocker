@@ -37,7 +37,7 @@ namespace ChargeLocker.Test.Unit
         {
             uut.LogDoorLocked(testRfid);
             // Flush method saves the data to the underlying stream
-            // in this case, the memory stream, which can represent 
+            // in this case the memory stream, which can represent 
             // a file.
 
             writer.Flush();
