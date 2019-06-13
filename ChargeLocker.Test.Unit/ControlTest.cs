@@ -34,6 +34,34 @@ namespace ChargeLocker.Test.Unit
                 charger,logger,display);
         }
 
+        #region DoorOpened tests
+
+        [Test]
+        public void DoorOpened_StateAvailable_DisplaysConnect()
+        {
+            door.Opened += Raise.EventWith(this,EventArgs.Empty);
+
+            display.Received(1).ShowConnectPhone();
+        }
+
+
+        #endregion
+
+        #region DoorOpened tests
+
+        [Test]
+        public void DoorClose_StateOpen_DisplaysInputRfid()
+        {
+            door.Opened += Raise.EventWith(this, EventArgs.Empty);
+            door.Closed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.Received(1).ShowInputRfid();
+        }
+
+
+        #endregion
+
+
 
     }
 }
