@@ -12,7 +12,7 @@ namespace ChargeLockerClasses.Interfaces
     }
     public interface IRFIDReader
     {
-        event EventHandler<RfidChangedEventArgs> RfidDetected;
+        event EventHandler<RfidChangedEventArgs> DetectRfid;
         void Detected();
 
     }

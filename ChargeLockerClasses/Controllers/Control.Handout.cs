@@ -33,17 +33,42 @@ namespace ChargeLockerClasses.Controllers
             _door.Opened += new EventHandler(DoorOpened);
             _door.Closed += new EventHandler(DoorClosed);
 
-            _rfidReader.RfidDetected += new EventHandler(RfidDetected());
+            _rfidReader.DetectRfid += new EventHandler<RfidChangedEventArgs>(RfidDetected);
         }
 
         private void DoorOpened(object sender, EventArgs e)
         {
-
+            switch (_lockState)
+            {
+                case ChargerLockState.Available:
+                    _display.ShowConnectPhone();
+                    _lockState = ChargerLockState.DoorOpen;
+                    break;
+                case ChargerLockState.Locked:
+                    // Error message : Locker is locked
+                    break;
+                case ChargerLockState.DoorOpen:
+                    // Error message : Locker is already open
+                    break;
+            }
+            
         }
 
         private void DoorClosed(object sender, EventArgs e)
         {
-
+            switch (_lockState)
+            {
+                case ChargerLockState.Available:
+                    // Ignore
+                    break;
+                case ChargerLockState.Locked:
+                    // Error message : Door is already locked locked
+                    break;
+                case ChargerLockState.DoorOpen:
+                    _display.ShowInputRfid();
+                    _lockState = ChargerLockState.Locked;
+                    break;
+            } 
         }
 
         private bool CheckId(string id)
@@ -54,7 +79,7 @@ namespace ChargeLockerClasses.Controllers
         // private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        public void RfidDetected(object sender, EventArgs e)
+        public void RfidDetected(object sender, RfidChangedEventArgs e)
         {
             switch (_lockState)
             {
@@ -65,8 +90,8 @@ namespace ChargeLockerClasses.Controllers
                     {
                         _door.LockDoor();
                         _charger.StartCharge();
-                        _oldId = id;
-                        _logger.LogDoorLocked(id);
+                        _oldId = e.Rfid;
+                        _logger.LogDoorLocked(e.Rfid);
                         _display.ShowOccupied();
 
                         _lockState = ChargerLockState.Locked;
@@ -85,11 +110,11 @@ namespace ChargeLockerClasses.Controllers
 
                 case ChargerLockState.Locked:
                     // Check for correct ID
-                    if (CheckId(id))
+                    if (CheckId(e.Rfid))
                     {
                         _charger.StopCharge();
                         _door.UnlockDoor();
-                        _logger.LogDoorUnlocked(id);
+                        _logger.LogDoorUnlocked(e.Rfid);
                         _display.ShowRmvPhone();
                         _lockState = ChargerLockState.Available;
                     }
