@@ -243,6 +243,16 @@ namespace ChargeLocker.Test.Unit
             logger.DidNotReceive().LogDoorUnlocked(incorrectRfid);
         }
 
+        [Test]
+        public void RfidDetected_StateLocked_DisplaysRmvPhone()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+
+            display.Received(1).ShowRmvPhone();
+        }
+
         #endregion
 
         #endregion
