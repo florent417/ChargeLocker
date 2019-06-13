@@ -71,7 +71,7 @@ namespace ChargeLockerClasses.Controllers
 
         private bool CheckId(string id)
         {
-            return id == _oldId;
+            return id.Equals(_oldId);
         }
 
         // private string logFile = "logfile.txt"; // Navnet på systemets log-fil

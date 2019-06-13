@@ -194,25 +194,24 @@ namespace ChargeLocker.Test.Unit
 
         // Doesn't work, why??
         [Test]
-        public void RfiDetected_StateLocked_DisplaysRfidErr()
+        public void RfidDetected_StateLocked_DisplaysRfidErr()
         {
-            door.Opened += Raise.EventWith(this, EventArgs.Empty);
-            door.Closed += Raise.EventWith(this, EventArgs.Empty);
-            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = testRfid});
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = incorrectRfid});
 
-            display.Received().ShowRfidErr();
+            display.Received(1).ShowRfidErr();
         }
 
-        //[Test]
-        //public void RfiDetected_StateLocked_DisplaysRfidErr()
-        //{
-        //    door.Opened += Raise.EventWith(this, EventArgs.Empty);
-        //    rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = testRfid});
-        //    door.Closed += Raise.EventWith(this, EventArgs.Empty);
-        //    rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = incorrectRfid});
+        [Test]
+        public void RfidDetected_StateLocked_StopChargeCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
 
-        //    display.Received().ShowRfidErr();
-        //}
+            charger.Received(1).StopCharge();
+        }
 
         #endregion
 
