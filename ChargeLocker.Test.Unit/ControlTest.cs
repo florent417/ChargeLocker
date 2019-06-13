@@ -87,6 +87,15 @@ namespace ChargeLocker.Test.Unit
             display.Received(1).ShowInputRfid();
         }
 
+        [Test]
+        public void RfidDetected_StateOpen_DisplayWrongInfo()
+        {
+            door.Opened += Raise.EventWith(this, EventArgs.Empty);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs { Rfid = "22" });
+
+            display.DidNotReceive().ShowOccupied();
+        }
+
         #endregion
 
 
