@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Control.Handout.cs" />
+    <Compile Include="Controllers\Control.cs" />
     <Compile Include="Interfaces\ICharger.cs" />
     <Compile Include="Interfaces\IDisplay.cs" />
     <Compile Include="Interfaces\IDoor.cs" />

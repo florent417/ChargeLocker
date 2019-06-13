@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using ChargeLockerClasses.Interfaces;
 
 namespace ChargeLockerClasses.Controllers
