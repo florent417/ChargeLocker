@@ -17,14 +17,15 @@ namespace ChargeLockerClasses.Boundary
             _writer = writer;
         }
 
+        // Hours, minutes and seconds as the assignment said
         public void LogDoorLocked(string id)
         {
-            _writer.WriteLine(DateTime.Now + $": Locker locked with RFID: {id}");
+            _writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + $": Locker locked with RFID: {id}");
         }
 
         public void LogDoorUnlocked(string id)
         {
-            _writer.WriteLine(DateTime.Now + $": Locker unlocked with RFID: {id}");
+            _writer.WriteLine(DateTime.Now.ToString("HH:mm:ss") + $": Locker unlocked with RFID: {id}");
         }
     }
 }
