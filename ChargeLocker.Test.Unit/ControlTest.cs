@@ -192,7 +192,6 @@ namespace ChargeLocker.Test.Unit
 
         #region RfiDetected State = Locked
 
-        // Doesn't work, why??
         [Test]
         public void RfidDetected_StateLocked_DisplaysRfidErr()
         {
