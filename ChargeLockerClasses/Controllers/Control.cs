@@ -64,14 +64,14 @@ namespace ChargeLockerClasses.Controllers
                     break;
                 case ChargerLockState.DoorOpen:
                     _display.ShowInputRfid();
-                    _lockState = ChargerLockState.Locked;
+                    _lockState = ChargerLockState.Available;
                     break;
             } 
         }
 
         private bool CheckId(string id)
         {
-            return id.Equals(_oldId);
+            return id == _oldId;
         }
 
         // private string logFile = "logfile.txt"; // Navnet på systemets log-fil

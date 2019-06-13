@@ -21,6 +21,9 @@ namespace ChargeLocker.Test.Unit
         private ILogger logger;
         private IRFIDReader rfidReader;
 
+        private string testRfid = "A22";
+        private string incorrectRfid = "A21";
+
         [SetUp]
         public void Setup()
         {
@@ -60,6 +63,19 @@ namespace ChargeLocker.Test.Unit
 
 
         #endregion
+
+        //#region CheckId tests, acquire id by calling RfidDetected with an Id
+
+        //[Test]
+        //public void CheckId_StateAvailable_AndRfidDetectedCalled_CorrectId_ReturnsTrue()
+        //{
+        //    charger.IsConnected().Returns(true);
+        //    rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = testRfid});
+
+        //    Assert.That(uut.);
+        //}
+
+        //#endregion
 
         #region RfidDetected tests
 
@@ -137,7 +153,15 @@ namespace ChargeLocker.Test.Unit
 
             logger.Received(1).LogDoorLocked(null);
         }
+        
+        [Test]
+        public void RfidDetected_StateAvailable_DisplaysOccupied()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
 
+            display.Received(1).ShowOccupied();
+        }
 
 
         #endregion
@@ -166,6 +190,31 @@ namespace ChargeLocker.Test.Unit
 
         #endregion
 
+        #region RfiDetected State = Locked
+
+        // Doesn't work, why??
+        [Test]
+        public void RfiDetected_StateLocked_DisplaysRfidErr()
+        {
+            door.Opened += Raise.EventWith(this, EventArgs.Empty);
+            door.Closed += Raise.EventWith(this, EventArgs.Empty);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            display.Received().ShowRfidErr();
+        }
+
+        //[Test]
+        //public void RfiDetected_StateLocked_DisplaysRfidErr()
+        //{
+        //    door.Opened += Raise.EventWith(this, EventArgs.Empty);
+        //    rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = testRfid});
+        //    door.Closed += Raise.EventWith(this, EventArgs.Empty);
+        //    rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs(){Rfid = incorrectRfid});
+
+        //    display.Received().ShowRfidErr();
+        //}
+
+        #endregion
 
         #endregion
 
