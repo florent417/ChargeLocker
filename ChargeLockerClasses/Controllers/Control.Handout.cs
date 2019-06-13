@@ -59,10 +59,10 @@ namespace ChargeLockerClasses.Controllers
             switch (_lockState)
             {
                 case ChargerLockState.Available:
-                    // Ignore
+                    // Error message : Locker cannot be closed whilst available
                     break;
                 case ChargerLockState.Locked:
-                    // Error message : Door is already locked locked
+                    // Error message : Locker is already locked locked
                     break;
                 case ChargerLockState.DoorOpen:
                     _display.ShowInputRfid();
