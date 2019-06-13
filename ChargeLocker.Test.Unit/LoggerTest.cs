@@ -36,6 +36,10 @@ namespace ChargeLocker.Test.Unit
         public void LogDoorLocked_LoggedForLocked_ContainsText()
         {
             uut.LogDoorLocked(testRfid);
+            // Flush method saves the data to the underlying stream
+            // in this case, the memory stream, which can represent 
+            // a file.
+
             writer.Flush();
 
             string actual = Encoding.UTF8.GetString(memoryStream.ToArray());
