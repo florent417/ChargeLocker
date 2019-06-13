@@ -47,7 +47,7 @@ namespace ChargeLocker.Test.Unit
 
         #endregion
 
-        #region DoorOpened tests
+        #region DoorClosed tests
 
         [Test]
         public void DoorClose_StateOpen_DisplaysInputRfid()
@@ -61,6 +61,36 @@ namespace ChargeLocker.Test.Unit
 
         #endregion
 
+        #region RfidDetected tests
+
+        #region State = Available
+
+        [Test]
+        public void RfidDetected_StateAvailable_DisplaysInputRfid()
+        {
+            door.Opened += Raise.EventWith(this, EventArgs.Empty);
+            door.Closed += Raise.EventWith(this, EventArgs.Empty);
+
+            display.Received(1).ShowInputRfid();
+        }
+
+        #endregion
+
+        #region State = DoorOpen
+
+        [Test]
+        public void RfidDetected_StateOpen_DisplaysInputRfid()
+        {
+            door.Opened += Raise.EventWith(this, EventArgs.Empty);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs { Rfid = "22"});
+
+            display.Received(1).ShowInputRfid();
+        }
+
+        #endregion
+
+
+        #endregion
 
 
     }
