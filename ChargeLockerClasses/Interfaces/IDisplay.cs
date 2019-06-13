@@ -8,5 +8,11 @@ namespace ChargeLockerClasses.Interfaces
 {
     interface IDisplay
     {
+        void ShowConnectPhone();
+        void ShowInputRfid();
+        void ShowConnectionErr();
+        void ShowOccupied();
+        void ShowRfidErr();
+        void ShowRmvPhone();
     }
 }

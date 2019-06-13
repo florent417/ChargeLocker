@@ -8,5 +8,6 @@ namespace ChargeLockerClasses.Interfaces
 {
     interface IOutput
     {
+        void OutputLine(string line);
     }
 }

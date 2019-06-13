@@ -8,5 +8,8 @@ namespace ChargeLockerClasses.Interfaces
 {
     interface ILogger
     {
+        void LogDoorLocked(string id);
+        void LogDoorUnlocked(string id);
+
     }
 }

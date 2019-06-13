@@ -8,5 +8,8 @@ namespace ChargeLockerClasses.Interfaces
 {
     interface IRFIDReader
     {
+        event EventHandler RfidDetected;
+        void Detected();
+
     }
 }

@@ -8,5 +8,8 @@ namespace ChargeLockerClasses.Interfaces
 {
     interface ICharger
     {
+        bool IsConnected();
+        void StartCharge();
+        void StopCharge();
     }
 }
