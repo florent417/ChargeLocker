@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Control.Handout.cs" />
+    <Compile Include="Controllers\Control.Handout.cs" />
     <Compile Include="Interfaces\ICharger.cs" />
     <Compile Include="Interfaces\IDisplay.cs" />
     <Compile Include="Interfaces\IDoor.cs" />
