@@ -223,6 +223,26 @@ namespace ChargeLocker.Test.Unit
             door.Received(1).UnlockDoor();
         }
 
+        [Test]
+        public void RfidDetected_StateLocked_CorrectId_LogDoorUnlockedCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+
+            logger.Received(1).LogDoorUnlocked(testRfid);
+        }
+
+        [Test]
+        public void RfidDetected_StateLockedAndWrongId_LogDoorUnlockedFails()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+
+            logger.DidNotReceive().LogDoorUnlocked(incorrectRfid);
+        }
+
         #endregion
 
         #endregion
