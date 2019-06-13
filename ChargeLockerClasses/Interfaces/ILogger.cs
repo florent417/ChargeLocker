@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChargeLockerClasses.Interfaces
 {
-    interface ILogger
+    public interface ILogger
     {
         void LogDoorLocked(string id);
         void LogDoorUnlocked(string id);

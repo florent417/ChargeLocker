@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChargeLockerClasses.Interfaces
 {
-    interface IOutput
+    public interface IOutput
     {
         void OutputLine(string line);
     }

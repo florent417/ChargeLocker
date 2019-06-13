@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChargeLockerClasses.Interfaces
 {
-    interface IDisplay
+    public interface IDisplay
     {
         void ShowConnectPhone();
         void ShowInputRfid();

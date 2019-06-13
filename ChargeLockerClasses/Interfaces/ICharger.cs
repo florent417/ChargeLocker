@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChargeLockerClasses.Interfaces
 {
-    interface ICharger
+    public interface ICharger
     {
         bool IsConnected();
         void StartCharge();
