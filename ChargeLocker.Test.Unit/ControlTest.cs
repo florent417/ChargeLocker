@@ -213,6 +213,16 @@ namespace ChargeLocker.Test.Unit
             charger.Received(1).StopCharge();
         }
 
+        [Test]
+        public void RfidDetected_StateLocked_UnlockDoorCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs() { Rfid = testRfid });
+
+            door.Received(1).UnlockDoor();
+        }
+
         #endregion
 
         #endregion

@@ -77,7 +77,7 @@ namespace ChargeLockerClasses.Controllers
         // private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        public void RfidDetected(object sender, RfidChangedEventArgs e)
+        private void RfidDetected(object sender, RfidChangedEventArgs e)
         {
             switch (_lockState)
             {
