@@ -81,6 +81,65 @@ namespace ChargeLocker.Test.Unit
             charger.Received(1).IsConnected();
         }
 
+        [Test]
+        public void RfidDetected_StateAvailable_ChargerIsNotConnected()
+        {
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            charger.IsConnected().Returns(false);
+
+            charger.Received(1).IsConnected();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_DisplaysConnectionErr()
+        {
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            charger.IsConnected().Returns(false);
+
+            display.Received(1).ShowConnectionErr();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_DoesntDisplayShowOccupied()
+        {
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            charger.IsConnected().Returns(false);
+
+            display.DidNotReceive().ShowOccupied();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_LockDoorCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            door.Received(1).LockDoor();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_StartChargeCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            charger.Received(1).StartCharge();
+        }
+
+        [Test]
+        public void RfidDetected_StateAvailable_LogDoorLockedCalled()
+        {
+            charger.IsConnected().Returns(true);
+            rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs());
+
+            logger.Received(1).LogDoorLocked(null);
+        }
+
+
+
         #endregion
 
         #region RfidDetected State = DoorOpen
@@ -95,13 +154,15 @@ namespace ChargeLocker.Test.Unit
         }
 
         [Test]
-        public void RfidDetected_StateOpen_DisplayWrongInfo()
+        public void RfidDetected_StateOpen_DoesntDisplayWrongInfo()
         {
             door.Opened += Raise.EventWith(this, EventArgs.Empty);
             rfidReader.DetectRfid += Raise.EventWith(this, new RfidChangedEventArgs { Rfid = "22" });
 
             display.DidNotReceive().ShowOccupied();
         }
+
+
 
         #endregion
 
