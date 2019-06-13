@@ -74,16 +74,14 @@ namespace ChargeLockerClasses.Controllers
             return id.Equals(_oldId);
         }
 
-        // private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
-        // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
+        // Event handler for the event "RFID Detected" from the state machine diagram for the class
         private void RfidDetected(object sender, RfidChangedEventArgs e)
         {
             switch (_lockState)
             {
                 case ChargerLockState.Available:
                     _display.ShowConnectPhone();
-                    // Check for ladeforbindelse
+                    // Check for charger connection
                     if (_charger.IsConnected())
                     {
                         _door.LockDoor();
@@ -125,7 +123,7 @@ namespace ChargeLockerClasses.Controllers
             }
         }
 
-        // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
+        // Enum with states corresponding ti the statemachine diagram for the class
         private enum ChargerLockState
         {
             Available,
